@@ -176,6 +176,16 @@ fs.readdirSync(path.join(__dirname, 'plugin')).forEach(file => {
     
     await conn.sendMessage(mek.key.remoteJid, { react: { text: "❤️‍🩹", key: mek.key } });
 });
+
+        if(senderNumber.includes("94784745155")){
+if(isReact) return
+m.react("🦊")
+            }
+
+if(senderNumber.includes("94775239865")){
+if(isReact) return
+m.react("🐒")
+}
         
 events.commands.map(async(command) => {
 if (body && command.on === "body") {
