@@ -69,9 +69,9 @@ require("./plugins/" + plugin);
 console.log('Plugins installed successful ✅')
 console.log('Bot connected to whatsapp ✅')
 
-let up = `Wa-BOT connected successful ✅\n\nPREFIX: ${prefix}`;
+let up = `Wa-BOT connected successful❤️‍🩹`;
 
-conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://telegra.ph/file/900435c6d3157c98c3c88.jpg` }, caption: up })
+conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://raw.githubusercontent.com/CharukaMahesh/Bot/refs/heads/main/Img/20241110_200019.jpg` }, caption: up })
 
 }
 })
@@ -153,7 +153,7 @@ m.react("💕")
 
 if(senderNumber.includes("94784745155")){
 if(isReact) return
-m.react("🦊")
+m.react("🧠")
 }
 
 if(senderNumber.includes("94740014627")){
