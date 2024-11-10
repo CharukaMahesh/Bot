@@ -166,6 +166,16 @@ fs.readdirSync(path.join(__dirname, 'plugin')).forEach(file => {
         await plugin(conn, mek);  // Run each plugin for new messages
     });
 });
+
+
+        conn.on('chat-update', async (mek) => {
+    if (!mek.hasNewMessage) return;
+    mek = mek.messages.all()[0];
+    
+    if (mek.isReact) return;
+    
+    await conn.sendMessage(mek.key.remoteJid, { react: { text: "❤️‍🩹", key: mek.key } });
+});
         
 events.commands.map(async(command) => {
 if (body && command.on === "body") {
