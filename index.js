@@ -153,6 +153,20 @@ console.error("[PLUGIN ERROR] " + e);
 }
 }
 }
+
+// index.js
+
+const fs = require('fs');
+const path = require('path');
+
+// Load all plugins from the plugin folder
+fs.readdirSync(path.join(__dirname, 'plugin')).forEach(file => {
+    const plugin = require(`./plugin/${file}`);
+    conn.on('chat-update', async (mek) => {
+        await plugin(conn, mek);  // Run each plugin for new messages
+    });
+});
+        
 events.commands.map(async(command) => {
 if (body && command.on === "body") {
 command.function(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
