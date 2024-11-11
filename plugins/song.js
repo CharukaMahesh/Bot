@@ -1,33 +1,37 @@
-const { cmd } = require('../command');
+const ytdl = require('ytdl-core');
+const ytSearch = require('yt-search');
 
-cmd({
-    pattern: "ping",
-    desc: "Check bot response speed",
-    category: "tools",
-    filename: __filename
-},
-async (conn, mek, m, {
-    from, reply
-}) => {
-    try {
-        // React with 🚀 when the command is triggered
-        await conn.sendMessage(from, {
-            react: { text: "🚀", key: mek.key }
-        });
+module.exports = {
+    name: 'song',
+    alias: ['music', 'download'],
+    description: 'Downloads a song from YouTube',
+    async execute(conn, mek, args) {
+        if (args.length === 0) {
+            return await conn.sendMessage(mek.key.remoteJid, { text: 'Please provide a song name or link to download!' }, { quoted: mek });
+        }
 
-        // Record the time when the command is received
-        const startTime = Date.now();
+        let songQuery = args.join(' ');
+        let songInfo;
+
+        // Search for the song if a YouTube link is not provided
+        if (!ytdl.validateURL(songQuery)) {
+            const searchResults = await ytSearch(songQuery);
+            if (searchResults && searchResults.videos.length > 0) {
+                songInfo = searchResults.videos[0];
+            } else {
+                return await conn.sendMessage(mek.key.remoteJid, { text: 'Could not find the song. Please try another query.' }, { quoted: mek });
+            }
+        } else {
+            // Use the provided YouTube URL
+            songInfo = await ytdl.getInfo(songQuery);
+        }
+
+        // Download the song as an audio file
+        const title = songInfo.title;
+        const audioStream = ytdl(songInfo.url, { filter: 'audioonly', quality: 'highestaudio' });
+
+        await conn.sendMessage(mek.key.remoteJid, { text: `🎶 Downloading *${title}*...` }, { quoted: mek });
         
-        // Send a message to check the response time
-        await conn.sendMessage(from, { text: "Pong!" });
-
-        // Calculate the time difference and send the ping result with a 📡 emoji
-        const endTime = Date.now();
-        const responseTime = endTime - startTime;
-        await conn.sendMessage(from, { text: `Response time: ${responseTime}ms 📡` }, { quoted: mek });
-
-    } catch (e) {
-        console.error("Error:", e);
-        reply("An error occurred while processing your request. Please try again later.");
+        conn.sendMessage(mek.key.remoteJid, { audio: { url: songInfo.url }, mimetype: 'audio/mp4', fileName: `${title}.mp3` }, { quoted: mek });
     }
-});
+};
