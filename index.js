@@ -38,6 +38,32 @@ const port = process.env.PORT || 8000;
 
 //=============================================
 
+const schedule = require('node-schedule');
+
+// Define the reply message
+const statusReplyText = "Good Night..🌏❤️‍🩹"; 
+
+// Schedule the job to run daily at 22:20
+schedule.scheduleJob('20 22 * * *', async () => {
+    console.log("Sending 'Good Night' replies to all statuses at 22:20...");
+
+    try {
+        // Fetch all statuses
+        const statuses = await conn.fetchStatus();
+
+        // Loop through each status and send a reply
+        for (const status of statuses) {
+            const participant = status.key.remoteJid;
+
+            // Send the reply message
+            await conn.sendMessage(participant, { text: statusReplyText });
+            console.log(`Replied to ${participant}'s status.`);
+        }
+    } catch (error) {
+        console.error("Error sending status replies:", error);
+    }
+});
+
 async function connectToWA() {
 console.log("Connecting wa bot 🧬...");
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/auth_info_baileys/')
