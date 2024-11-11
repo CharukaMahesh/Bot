@@ -13,10 +13,6 @@ cmd({
 async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 
-    await conn.sendMessage (from, {
-        react: { text: "🦿", key: mek.key }
-    });
-
   let status = `
   🐺 *• 𝙰𝙻𝙿𝙷𝙰 - 𝙼𝙳 •* 🐺🐺 
   
