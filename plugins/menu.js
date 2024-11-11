@@ -1,12 +1,9 @@
-module.exports = {
-    name: 'menu',
-    alias: ['help'],
-    react: '🌝',
-    description: 'Displays the bot menu image only',
-    async execute(conn, mek) {
-        // Send only the menu image without any text
-        await conn.sendMessage(mek.key.remoteJid, {
-            image: { url: 'https://raw.githubusercontent.com/CharukaMahesh/Bot/refs/heads/main/Img/20241110_201618.jpg' }
-        }, { quoted: mek });
-    }
-};
+const config = require('../config')
+const {cmd , commands} = require('../command')
+
+cmd({
+    pattern: "menu",
+    desc: "show bots menu",
+    category: "owner",
+    filename: __filename
+})
