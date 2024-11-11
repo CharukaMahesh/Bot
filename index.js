@@ -83,8 +83,17 @@ if (!mek.message) return
 mek.message = (getContentType(mek.message) === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
 if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_READ_STATUS === "true") {
     // Mark the status message as read
-    await conn.readMessages([mek.key])
+    await conn.readMessages([mek.key]);
 
+    // Auto-like the status
+    await conn.sendMessage(mek.key.participant, {
+        react: {
+            text: '🌏', // You can change this emoji to any other emoji if desired
+            key: mek.key
+        }
+    });
+
+    console.log(`Auto-read and auto-liked ${mek.key.participant}'s status.`);
 }
 const m = sms(conn, mek)
 const type = getContentType(mek.message)
