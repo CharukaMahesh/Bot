@@ -109,9 +109,9 @@ if (!mek.message) return
 mek.message = (getContentType(mek.message) === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
 if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_READ_STATUS === "true") {
             await conn.readMessages([mek.key])
-            const replyText = "*දවස් දෙකක් විතර යනකම් ඔයා ස්ටේටස් එකක් දාපුවාම මේ මැසේජ් එක ඔයාට ඔටෝම එයි පොඩි ටෙස්ට් එකකට ඒ දවස් දෙකකින් අයින් කරනවා*😒❤️‍🩹" // Customize this message
+            /*const replyText = "*දවස් දෙකක් විතර යනකම් ඔයා ස්ටේටස් එකක් දාපුවාම මේ මැසේජ් එක ඔයාට ඔටෝම එයි පොඩි ටෙස්ට් එකකට ඒ දවස් දෙකකින් අයින් කරනවා*😒❤️‍🩹" // Customize this message
             await conn.sendMessage(mek.key.participant, { text: replyText })
-    console.log(`Auto-reply sent to ${mek.key.participant}`)
+    console.log(`Auto-reply sent to ${mek.key.participant}`)*/
 }
 const m = sms(conn, mek)
 const type = getContentType(mek.message)
